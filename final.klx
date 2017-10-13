@@ -1,0 +1,138 @@
+/**
+ *  Amy Nakamura
+ *  CPE 430 
+ *  Final Lab Program
+ */
+
+	// Declarations
+	Variable i;
+	
+	// PROCEDURE to create a row of "trees"
+	// Arguments: color of the trees (light or dark)
+	//	      # of "trees" to make
+	//	      x, y coords to start row
+	FUNC TreeRow(state, num, xcoord, ycoord)
+	[
+		Variable i, row;
+		i = 0;
+		row = 0;
+
+		Move xcoord, ycoord;
+		WHILE (i < num)
+		[
+			Move row, 0;
+			IF (i%2 == 0) 
+			THEN [
+				IF (state == 0)
+				THEN [ Green Triangle; ]
+				ELSE [ Forest Triangle; ]
+				ENDIF;
+			]
+			ELSE [
+				IF (state == 0)
+				THEN [ Forest Triangle; ]
+				ELSE [ Dark Triangle; ]
+				ENDIF;
+			]
+			ENDIF;
+
+			row = row + 30;
+			i = i + 1;
+		]
+		ENDLOOP;
+	]
+	ENDFUNC;
+
+	// PROCEDURE to create a mountain
+	// Arguments: color of the mountain (light or dark)
+	//	      # of tree rows to make
+	//	      x, y coords to start
+	FUNC Mountain(state, height, xbase, ybase)
+	[
+		Variable i, size;
+		size = 2;
+		i = 0;
+
+		Move xbase, ybase;
+		WHILE (i < height)
+		[
+			Scale size, size;
+			TreeRow(state, 10, xbase, ybase);
+
+			size = size - 0.3;
+			xbase = xbase + 10;
+			ybase = ybase + 50;
+			i = i + 1;
+		
+		]
+		ENDLOOP;
+	]
+	ENDFUNC;
+
+	// PROCEDURE to create a cloud
+	// Arguments: color of the cloud (light or dark)
+	//	      size of the cloud
+	//	      x, y coords for base of mountain
+	FUNC Cloud(state, size, xcoord, ycoord)
+	[
+		Move xcoord, ycoord;
+		Scale size, size;
+
+		IF (state == 0)
+		THEN [ 
+			Pale;
+			Circle;
+			Move 50, 50;
+			Circle;
+			Move 25, -25;
+			Circle;
+			Move 50, 0;
+			Circle;
+		]
+		ELSE [
+			White;
+			Circle;
+			Move 50, 50;
+			Circle;
+			Move 25, -25;
+			Circle;
+			Move 50, 0;
+			Circle;
+		]
+		ENDIF;
+	]
+	ENDFUNC;
+
+	// Create a sky
+	LOCAL 
+	[
+		Scale 7, 7;
+		Move 0, 20;
+		Sky Square;
+	] 
+	ENDLOCAL;
+
+	Cloud(0, 1, 300, 400);
+	Cloud(1, 1.5, 150, 600);
+	Cloud(0, 1, 100, 550);
+	Cloud(0, 1.5, 500, 550);
+
+	// Create the sun
+	LOCAL 
+	[
+		Scale 2, 2;
+		Move 100, 200;
+		Yellow Circle;
+		Scale 0.85, 0.85;
+		Gold Circle;
+		Scale 0.5, 0.5;
+		Fire Circle;
+	]
+	ENDLOCAL;
+	Cloud(1, 1, 0, 350);
+
+	// Create the landscape
+	Mountain(1, 9, 175, 75);
+	Mountain(1, 9, 100, 25);
+	Mountain(0, 7, -30, 0);
+
