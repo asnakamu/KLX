@@ -36,3 +36,5 @@ LANGUAGE DESIGN:
 		- May be nested
 		- Are considered another scope level, or everything within is considered
 		  local by default (to eliminate need to remember any state changes made)
+		  
+<img width="388" alt="mountainscene" src="https://user-images.githubusercontent.com/18107425/31568342-acd140ca-b028-11e7-9c3b-b51472117bb7.png">
